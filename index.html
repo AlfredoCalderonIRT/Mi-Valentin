@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💖 De mi para tu 💖</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #ffebf0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+        h1 {
+            font-family: 'Arial', sans-serif;
+            font-size: 2.5em;
+            color: #d62828;
+            margin-bottom: 20px;
+        }
+        .envelope {
+            position: relative;
+            width: 90%;
+            max-width: 350px;
+            height: 250px;
+            background: #f4a261;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            cursor: pointer;
+            transition: transform 0.5s ease-in-out;
+        }
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: #e76f51;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transform-origin: top;
+            transition: transform 0.5s ease-in-out;
+        }
+        .letter {
+            position: absolute;
+            width: 150%;
+            height: 120%;
+            background: white;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%) scale(0);
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.5s ease-in-out;
+        }
+        .letter p {
+            word-wrap: break-word;
+            font-size: 1em;
+            max-width: 100%;
+            overflow-y: auto;
+            margin: 0;
+        }
+        .heart-container, .pig-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .floating-heart, .floating-pig {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            animation: floatUp 5s linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            .envelope {
+                width: 80%;
+                height: 200px;
+            }
+            .letter {
+                width: 120%;
+                height: 170%;
+                top: -50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>💖 Feliz San Valentín 💖</h1>
+    <div class="heart-container"></div>
+    <div class="pig-container"></div>
+    <div class="envelope" onclick="toggleEnvelope()">
+        <div class="flap"></div>
+        <div class="letter">
+            <img src="https://cdn-icons-png.flaticon.com/512/2589/2589175.png" width="80" height="80" alt="heart">
+            <p>
+                Mi Querida Dama:<br>
+                Sé que pensaste que este San Valentín solo serías una espectadora, pero para mí es imposible dejar pasar un día así sin recordarte lo especial que eres para mí. Me gusta demostrarte mi amor de maneras únicas, porque lo que siento por ti es inmenso y verdadero.<br><br>
+                Eres mi alegría, mi paz y mi mayor fortuna. No hay un solo día en que no agradezca tenerte a mi lado. Te amo con todo mi corazón.<br><br>
+                Oink oink. 💖🐷
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        let isOpen = false;
+        function toggleEnvelope() {
+            if (!isOpen) {
+                document.querySelector('.flap').style.transform = 'rotateX(180deg)';
+                document.querySelector('.letter').style.transform = 'translateX(-50%) scale(1)';
+            } else {
+                document.querySelector('.flap').style.transform = 'rotateX(0deg)';
+                document.querySelector('.letter').style.transform = 'translateX(-50%) scale(0)';
+            }
+            isOpen = !isOpen;
+        }
+        function createFloatingElements(className, src, interval) {
+            setInterval(() => {
+                let element = document.createElement('img');
+                element.src = src;
+                element.classList.add(className);
+                element.style.left = `${Math.random() * 100}%`;
+                element.style.animationDuration = `${2 + Math.random() * 3}s`;
+                document.querySelector(className.includes('heart') ? '.heart-container' : '.pig-container').appendChild(element);
+                setTimeout(() => element.remove(), 5000);
+            }, interval);
+        }
+        createFloatingElements('floating-heart', "images/heart.png", 500);
+        createFloatingElements('floating-pig', "images/pig.png", 1500);
+    </script>
+</body>
+</html>
